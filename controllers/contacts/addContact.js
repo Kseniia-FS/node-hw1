@@ -1,9 +1,7 @@
 const { listContacts } = require("./listContacts");
 const { v4: uuidv4 } = require("uuid");
-const fs = require("fs/promises");
-const path = require("path");
-
-const contactsPath = path.resolve("./db/contacts.json");
+const updateFile = require("../../helpers");
+const contactsPath = require("../../helpers");
 
 const addContact = async (name, email, phone) => {
   const contactList = await listContacts();
@@ -15,8 +13,8 @@ const addContact = async (name, email, phone) => {
   };
 
   contactList.push(newContact);
-  await fs.writeFile(contactsPath, JSON.stringify(contactList));
+  await updateFile(contactsPath, contactList);
   return newContact;
 };
 
-module.exports = { addContact };
+module.exports = addContact;
